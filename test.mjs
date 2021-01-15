@@ -369,7 +369,7 @@ test('sitemap', function (t) {
       {
         url: 'https://example.com',
         lang: 'en',
-        modified: new Date(2017),
+        modified: new Date(1234567890123),
         alternate: {nl: 'https://example.nl'}
       }
     ]).children[1].children,
@@ -389,7 +389,7 @@ test('sitemap', function (t) {
             type: 'element',
             name: 'lastmod',
             attributes: {},
-            children: [{type: 'text', value: '1970-01-01T00:00:02.017Z'}]
+            children: [{type: 'text', value: '2009-02-13T23:31:30.123Z'}]
           },
           {
             type: 'element',
@@ -428,7 +428,7 @@ test('sitemap', function (t) {
             type: 'element',
             name: 'lastmod',
             attributes: {},
-            children: [{type: 'text', value: '1970-01-01T00:00:02.017Z'}]
+            children: [{type: 'text', value: '2009-02-13T23:31:30.123Z'}]
           },
           {
             type: 'element',
@@ -461,10 +461,10 @@ test('sitemap', function (t) {
       {
         url: 'https://example.com',
         lang: 'en',
-        modified: new Date(2017, 1),
+        modified: new Date(1234567890123),
         alternate: {nl: 'https://example.nl'}
       },
-      {url: 'https://example.nl', lang: 'nl', modified: new Date(2018, 1)}
+      {url: 'https://example.nl', lang: 'nl', modified: new Date(1231111111111)}
     ]).children[1].children,
     [
       {
@@ -482,7 +482,7 @@ test('sitemap', function (t) {
             type: 'element',
             name: 'lastmod',
             attributes: {},
-            children: [{type: 'text', value: '2017-01-31T23:00:00.000Z'}]
+            children: [{type: 'text', value: '2009-02-13T23:31:30.123Z'}]
           },
           {
             type: 'element',
@@ -521,7 +521,7 @@ test('sitemap', function (t) {
             type: 'element',
             name: 'lastmod',
             attributes: {},
-            children: [{type: 'text', value: '2018-01-31T23:00:00.000Z'}]
+            children: [{type: 'text', value: '2009-01-04T23:18:31.111Z'}]
           },
           {
             type: 'element',
