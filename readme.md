@@ -150,9 +150,9 @@ To define different fields, either use a full entry object:
 [
   {
     url: 'https://example.com/delta/',
-    modified: new Date(2018, 1)
+    modified: '05 October 2011 14:48 UTC',
     lang: 'en',
-    alternate: {nl: {url: 'https://example.com/dirk/', modified: new Date(2020, 2)}}
+    alternate: {nl: {url: 'https://example.com/dirk/', modified: '20 January 2020 00:00 UTC'}}
   }
 ]
 ```
@@ -163,13 +163,13 @@ Or define them separately:
 [
   {
     url: 'https://example.com/delta/',
-    modified: new Date(2018, 1)
+    modified: '05 October 2011 14:48 UTC',
     lang: 'en',
     alternate: {nl: 'https://example.com/dirk/'}
   },
   {
     url: 'https://example.com/dirk/',
-    modified: new Date(2020, 2)
+    modified: '20 January 2020 00:00 UTC',
     // `xast-util-sitemap` is smart enough to know about the next two already,
     // but they’re shown here for clarity.
     lang: 'nl',
