@@ -25,10 +25,13 @@
   "type": "module",
   "main": "./index.mjs",
   "module": "./index.mjs",
+  "types": "types",
   "files": [
-    "index.mjs"
+    "index.mjs",
+    "types/index.d.ts"
   ],
   "dependencies": {
+    "@types/xast": "^1.0.0",
     "bcp-47-normalize": "^1.0.0",
     "unist-builder": "^2.0.0",
     "xastscript": "^2.0.0"
@@ -36,6 +39,7 @@
   "devDependencies": {
     "c8": "^7.0.0",
     "concat-stream": "^2.0.0",
+    "dtslint": "^4.0.0",
     "prettier": "^2.0.0",
     "regenerate": "^1.0.0",
     "remark-cli": "^9.0.0",
@@ -48,7 +52,8 @@
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node test.mjs",
     "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node --experimental-modules test.mjs",
-    "test": "npm run format && npm run test-coverage"
+    "test-types": "dtslint types",
+    "test": "npm run format && npm run test-coverage && npm run test-types"
   },
   "prettier": {
     "tabWidth": 2,
