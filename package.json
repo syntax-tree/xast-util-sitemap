@@ -83,7 +83,10 @@
       "no-self-compare": "off",
       "unicorn/prefer-number-properties": "off",
       "unicorn/prefer-type-error": "off"
-    }
+    },
+    "ignores": [
+      "types"
+    ]
   },
   "remarkConfig": {
     "plugins": [

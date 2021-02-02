@@ -36,10 +36,7 @@ export interface Entry {
    *
    * @see https://github.com/wooorm/bcp-47
    */
-  alternate?: Record<
-    string,
-    string | Omit<Entry, 'lang' | 'alternate'> // eslint-disable-line @typescript-eslint/ban-types
-  >
+  alternate?: Record<string, string | Omit<Entry, 'lang' | 'alternate'>>
 }
 
 /**
