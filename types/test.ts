@@ -1,5 +1,6 @@
 import {sitemap} from 'xast-util-sitemap'
 
+sitemap() // $ExpectError
 sitemap([
   'https://example.com',
   {url: 'https://example.com'},
