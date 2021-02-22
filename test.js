@@ -1,7 +1,7 @@
 'use strict'
 
 import test from 'tape'
-import {sitemap} from './index.mjs'
+import {sitemap} from './index.js'
 
 test('sitemap', function (t) {
   t.deepEqual(

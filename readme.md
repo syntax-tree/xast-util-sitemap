@@ -41,9 +41,11 @@ be imported instead of required.
 npm install xast-util-sitemap
 ```
 
+Note that this package is ESM only: it must be imported instead of required.
+
 ## Use
 
-Say we have the following module, `example.mjs`
+Say we have the following module, `example.js`
 
 ```js
 import {sitemap} from 'xast-util-sitemap'
@@ -66,7 +68,7 @@ var tree = sitemap([
 console.log(toXml(tree))
 ```
 
-Now, running `node example.mjs` yields (pretty printed):
+Now, running `node example.js` yields (pretty printed):
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
