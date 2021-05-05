@@ -76,6 +76,7 @@ test('sitemap', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime.
       sitemap([{}])
     },
     /Invalid URL: undefined/,

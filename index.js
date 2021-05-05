@@ -1,21 +1,51 @@
+/**
+ * @typedef {import('xast').Root} Root
+ * @typedef {import('xast').Element} Element
+ *
+ * @typedef {string | Omit<Entry, 'lang'|'alternate'>} Alternate
+ *
+ * @typedef Entry Entries represent a single URL and describe them with metadata.
+ * @property {string} url Full URL (example: `'https://example.org/'`). See <https://www.sitemaps.org/protocol.html#locdef>
+ * @property {number|string|Date} [modified] Value indicating when the page last changed.
+ * @property {string} [lang] BCP 47 tag indicating the language of the page (example: `'en-GB'`). See <https://github.com/wooorm/bcp-47>
+ * @property {Object.<string, Alternate>} [alternate] Translations of the page, where each key is a BCP 47 tag and each value an entry. Alternate resources inherit fields from the entry they are described in.
+ */
+
+import {URL} from 'url'
 import bcp47 from 'bcp-47-normalize'
 import {u} from 'unist-builder'
 import {x} from 'xastscript'
 
 var own = {}.hasOwnProperty
 
+/**
+ * Build a sitemap.
+ *
+ * @param {Array<string|Entry>} [data] URLs to build a sitemap for.
+ * @returns {Root}
+ */
 export function sitemap(data) {
-  var nodes = []
-  var urls = {}
-  var groupings = {}
   var index = -1
-  var i18n
+  /** @type {Array.<Element>} */
+  var nodes = []
+  /** @type {Object.<string, Entry>} */
+  var urls = {}
+  /** @type {Object.<string, Array.<string>>} */
+  var groupings = {}
+  /** @type {Array.<string>} */
   var grouping
+  /** @type {Entry} */
   var entry
+  /** @type {Entry} */
   var alt
+  /** @type {string} */
   var key
+  /** @type {Element} */
   var node
+  /** @type {Date} */
   var modified
+  /** @type {boolean} */
+  var i18n
 
   if (data) {
     while (++index < data.length) {
@@ -85,14 +115,11 @@ export function sitemap(data) {
     if (own.call(urls, key)) {
       node = x('url', [x('loc', key)])
       entry = urls[key]
-      modified = entry.modified
 
       nodes.push(node)
 
-      if (modified != null) {
-        if (typeof modified !== 'object') {
-          modified = new Date(modified)
-        }
+      if (entry.modified != null) {
+        modified = toDate(entry.modified)
 
         if (Number.isNaN(modified.valueOf())) {
           throw new TypeError(
@@ -133,8 +160,13 @@ export function sitemap(data) {
   ])
 }
 
+/**
+ * @param {string|Entry} d
+ */
 function toEntry(d) {
+  /** @type {Entry} */
   var entry = {}
+  /** @type {string} */
   var url
 
   if (typeof d === 'string') {
@@ -148,4 +180,12 @@ function toEntry(d) {
 
   entry.url = new URL(url).href
   return entry
+}
+
+/**
+ * @param {Date|string|number} value
+ * @returns {Date}
+ */
+export function toDate(value) {
+  return typeof value === 'object' ? value : new Date(value)
 }
