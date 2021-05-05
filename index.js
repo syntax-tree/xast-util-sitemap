@@ -1,6 +1,6 @@
 import bcp47 from 'bcp-47-normalize'
-import u from 'unist-builder'
-import x from 'xastscript'
+import {u} from 'unist-builder'
+import {x} from 'xastscript'
 
 var own = {}.hasOwnProperty
 
@@ -94,8 +94,10 @@ export function sitemap(data) {
           modified = new Date(modified)
         }
 
-        if (isNaN(modified)) {
-          throw new Error('Unexpected incorrect date `' + entry.modified + '`')
+        if (Number.isNaN(modified.valueOf())) {
+          throw new TypeError(
+            'Unexpected incorrect date `' + entry.modified + '`'
+          )
         }
 
         node.children.push(x('lastmod', modified.toISOString()))

@@ -30,10 +30,10 @@ You should place sitemaps in the root of your site and reference them in
 You might also [report](https://support.google.com/webmasters/answer/7451001)
 sitemap changes to Google.
 
-Note that this package is ESM only: Node 12+ is required to use it and it must
-be imported instead of required.
-
 ## Install
+
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
 
 [npm][]:
 
@@ -41,15 +41,13 @@ be imported instead of required.
 npm install xast-util-sitemap
 ```
 
-Note that this package is ESM only: it must be imported instead of required.
-
 ## Use
 
 Say we have the following module, `example.js`
 
 ```js
 import {sitemap} from 'xast-util-sitemap'
-import toXml from 'xast-util-to-xml'
+import {toXml} from 'xast-util-to-xml'
 
 var tree = sitemap([
   'https://example.com/alpha/',
@@ -105,6 +103,9 @@ Now, running `node example.js` yields (pretty printed):
 ```
 
 ## API
+
+This package exports the following identifiers: `sitemap`.
+There is no default export.
 
 ### `sitemap(data)`
 

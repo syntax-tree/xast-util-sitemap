@@ -1,5 +1,3 @@
-'use strict'
-
 import test from 'tape'
 import {sitemap} from './index.js'
 
