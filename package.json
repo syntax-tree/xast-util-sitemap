@@ -49,7 +49,7 @@
     "type-coverage": "^2.0.0",
     "typescript": "^4.0.0",
     "xast-util-to-xml": "^3.0.0",
-    "xo": "^0.39.0"
+    "xo": "^0.40.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
@@ -81,7 +81,9 @@
       "max-depth": "off",
       "no-eq-null": "off",
       "no-var": "off",
-      "prefer-arrow-callback": "off"
+      "prefer-arrow-callback": "off",
+      "unicorn/numeric-separators-style": "off",
+      "unicorn/prefer-node-protocol": "off"
     }
   },
   "remarkConfig": {
