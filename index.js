@@ -12,7 +12,7 @@
  */
 
 import {URL} from 'url'
-import bcp47 from 'bcp-47-normalize'
+import {bcp47Normalize as normalize} from 'bcp-47-normalize'
 import {u} from 'unist-builder'
 import {x} from 'xastscript'
 
@@ -97,7 +97,7 @@ export function sitemap(data) {
         for (key in entry.alternate) {
           if (own.call(entry.alternate, key)) {
             alt = toEntry(entry.alternate[key])
-            if (!alt.lang) alt.lang = bcp47(key)
+            if (!alt.lang) alt.lang = normalize(key)
 
             if (!own.call(urls, alt.url)) {
               urls[alt.url] = Object.assign({}, entry, alt)
@@ -173,7 +173,7 @@ function toEntry(d) {
     url = d
   } else {
     url = d.url
-    if (d.lang != null) entry.lang = bcp47(d.lang)
+    if (d.lang != null) entry.lang = normalize(d.lang)
     if (d.modified != null) entry.modified = d.modified
     if (d.alternate != null) entry.alternate = d.alternate
   }
