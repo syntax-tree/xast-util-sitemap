@@ -79,7 +79,7 @@ test('sitemap', function (t) {
       // @ts-ignore runtime.
       sitemap([{}])
     },
-    /Invalid URL: undefined/,
+    /Invalid URL/,
     'should crash w/o `url`'
   )
 
@@ -87,7 +87,7 @@ test('sitemap', function (t) {
     function () {
       sitemap(['example.com'])
     },
-    /Invalid URL: example.com/,
+    /Invalid URL/,
     'should crash w/ incorrect `url`'
   )
 
