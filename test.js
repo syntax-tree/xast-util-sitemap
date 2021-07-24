@@ -1,7 +1,7 @@
 import test from 'tape'
 import {sitemap} from './index.js'
 
-test('sitemap', function (t) {
+test('sitemap', (t) => {
   t.deepEqual(
     sitemap(),
     {
@@ -85,7 +85,7 @@ test('sitemap', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       // @ts-expect-error runtime.
       sitemap([{}])
     },
@@ -94,7 +94,7 @@ test('sitemap', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       sitemap(['example.com'])
     },
     /Invalid URL/,
@@ -202,7 +202,7 @@ test('sitemap', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       sitemap([{url: 'https://example.com', modified: new Date('asd')}])
     },
     /Error: Unexpected incorrect date `Invalid Date`/,
@@ -411,7 +411,7 @@ test('sitemap', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       sitemap([{url: 'https://example.com', alternate: {}}])
     },
     /Expected `lang` in entry with `alternate` `\[object Object]` \(`0`\)/,
@@ -423,7 +423,7 @@ test('sitemap', function (t) {
       {
         url: 'https://example.com',
         lang: 'en',
-        modified: new Date(1234567890123),
+        modified: new Date(1_234_567_890_123),
         alternate: {nl: 'https://example.nl'}
       }
     ]).children[1],
@@ -523,10 +523,14 @@ test('sitemap', function (t) {
       {
         url: 'https://example.com',
         lang: 'en',
-        modified: new Date(1234567890123),
+        modified: new Date(1_234_567_890_123),
         alternate: {nl: 'https://example.nl'}
       },
-      {url: 'https://example.nl', lang: 'nl', modified: new Date(1231111111111)}
+      {
+        url: 'https://example.nl',
+        lang: 'nl',
+        modified: new Date(1_231_111_111_111)
+      }
     ]).children[1],
     {
       type: 'element',

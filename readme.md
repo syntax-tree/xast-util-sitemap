@@ -49,7 +49,7 @@ Say we have the following module, `example.js`
 import {sitemap} from 'xast-util-sitemap'
 import {toXml} from 'xast-util-to-xml'
 
-var tree = sitemap([
+const tree = sitemap([
   'https://example.com/alpha/',
   {url: 'https://example.com/bravo/'},
   {url: 'https://example.com/charlie/', modified: new Date(2018, 1, 2, 3)},

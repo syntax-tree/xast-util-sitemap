@@ -11,12 +11,12 @@
  * @property {Object.<string, Alternate>} [alternate] Translations of the page, where each key is a BCP 47 tag and each value an entry. Alternate resources inherit fields from the entry they are described in.
  */
 
-import {URL} from 'url'
+import {URL} from 'node:url'
 import {bcp47Normalize as normalize} from 'bcp-47-normalize'
 import {u} from 'unist-builder'
 import {x} from 'xastscript'
 
-var own = {}.hasOwnProperty
+const own = {}.hasOwnProperty
 
 /**
  * Build a sitemap.
@@ -25,31 +25,20 @@ var own = {}.hasOwnProperty
  * @returns {Root}
  */
 export function sitemap(data) {
-  var index = -1
   /** @type {Array.<Element>} */
-  var nodes = []
+  const nodes = []
   /** @type {Object.<string, Entry>} */
-  var urls = {}
+  const urls = {}
   /** @type {Object.<string, Array.<string>>} */
-  var groupings = {}
-  /** @type {Array.<string>} */
-  var grouping
-  /** @type {Entry} */
-  var entry
-  /** @type {Entry} */
-  var alt
-  /** @type {string} */
-  var key
-  /** @type {Element} */
-  var node
-  /** @type {Date} */
-  var modified
+  const groupings = {}
   /** @type {boolean|undefined} */
-  var i18n
+  let i18n
 
   if (data) {
+    let index = -1
+
     while (++index < data.length) {
-      entry = toEntry(data[index])
+      const entry = toEntry(data[index])
 
       if (own.call(urls, entry.url)) {
         Object.assign(urls[entry.url], entry)
@@ -70,6 +59,9 @@ export function sitemap(data) {
           )
         }
 
+        /** @type {Array.<string>} */
+        let grouping
+
         // Find an already defined grouping.
         // Maybe the entry was references before?
         if (own.call(groupings, entry.url)) {
@@ -77,11 +69,14 @@ export function sitemap(data) {
         } else {
           grouping = []
 
+          /** @type {string} */
+          let key
+
           // Maybe one of the `alternates` was references before, if so: use
           // that group.
           for (key in entry.alternate) {
             if (own.call(entry.alternate, key)) {
-              alt = toEntry(entry.alternate[key])
+              const alt = toEntry(entry.alternate[key])
 
               if (own.call(groupings, alt.url)) {
                 grouping = groupings[alt.url]
@@ -94,9 +89,12 @@ export function sitemap(data) {
         if (!own.call(groupings, entry.url)) groupings[entry.url] = grouping
         if (!grouping.includes(entry.url)) grouping.push(entry.url)
 
+        /** @type {string} */
+        let key
+
         for (key in entry.alternate) {
           if (own.call(entry.alternate, key)) {
-            alt = toEntry(entry.alternate[key])
+            const alt = toEntry(entry.alternate[key])
             if (!alt.lang) alt.lang = normalize(key)
 
             if (!own.call(urls, alt.url)) {
@@ -111,15 +109,18 @@ export function sitemap(data) {
     }
   }
 
+  /** @type {string} */
+  let key
+
   for (key in urls) {
     if (own.call(urls, key)) {
-      node = x('url', [x('loc', key)])
-      entry = urls[key]
+      const node = x('url', [x('loc', key)])
+      const entry = urls[key]
 
       nodes.push(node)
 
-      if (entry.modified != null) {
-        modified = toDate(entry.modified)
+      if (entry.modified !== undefined && entry.modified !== null) {
+        const modified = toDate(entry.modified)
 
         if (Number.isNaN(modified.valueOf())) {
           throw new TypeError(
@@ -131,8 +132,8 @@ export function sitemap(data) {
       }
 
       if (own.call(groupings, key)) {
-        grouping = groupings[key]
-        index = -1
+        const grouping = groupings[key]
+        let index = -1
 
         while (++index < grouping.length) {
           node.children.push(
@@ -165,17 +166,19 @@ export function sitemap(data) {
  */
 function toEntry(d) {
   /** @type {Entry} */
-  var entry = {}
+  const entry = {}
   /** @type {string} */
-  var url
+  let url
 
   if (typeof d === 'string') {
     url = d
   } else {
     url = d.url
-    if (d.lang != null) entry.lang = normalize(d.lang)
-    if (d.modified != null) entry.modified = d.modified
-    if (d.alternate != null) entry.alternate = d.alternate
+    if (d.lang !== undefined && d.lang !== null) entry.lang = normalize(d.lang)
+    if (d.modified !== undefined && d.modified !== null)
+      entry.modified = d.modified
+    if (d.alternate !== undefined && d.alternate !== null)
+      entry.alternate = d.alternate
   }
 
   entry.url = new URL(url).href
