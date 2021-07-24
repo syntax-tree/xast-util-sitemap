@@ -86,7 +86,7 @@ test('sitemap', function (t) {
 
   t.throws(
     function () {
-      // @ts-ignore runtime.
+      // @ts-expect-error runtime.
       sitemap([{}])
     },
     /Invalid URL/,

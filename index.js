@@ -44,7 +44,7 @@ export function sitemap(data) {
   var node
   /** @type {Date} */
   var modified
-  /** @type {boolean} */
+  /** @type {boolean|undefined} */
   var i18n
 
   if (data) {
