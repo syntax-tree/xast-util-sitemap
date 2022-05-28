@@ -4,11 +4,20 @@
  *
  * @typedef {string | Omit<Entry, 'lang'|'alternate'>} Alternate
  *
- * @typedef Entry Entries represent a single URL and describe them with metadata.
- * @property {string} url Full URL (example: `'https://example.org/'`). See <https://www.sitemaps.org/protocol.html#locdef>
- * @property {number|string|Date} [modified] Value indicating when the page last changed.
- * @property {string} [lang] BCP 47 tag indicating the language of the page (example: `'en-GB'`). See <https://github.com/wooorm/bcp-47>
- * @property {Object.<string, Alternate>} [alternate] Translations of the page, where each key is a BCP 47 tag and each value an entry. Alternate resources inherit fields from the entry they are described in.
+ * @typedef Entry
+ *   Entries represent a single URL and describe them with metadata.
+ * @property {string} url
+ *   Full URL (example: `'https://example.org/'`).
+ *   See <https://www.sitemaps.org/protocol.html#locdef>
+ * @property {number|string|Date} [modified]
+ *   Value indicating when the page last changed.
+ * @property {string} [lang]
+ *   BCP 47 tag indicating the language of the page (example: `'en-GB'`).
+ *   See <https://github.com/wooorm/bcp-47>
+ * @property {Record<string, Alternate>} [alternate]
+ *   Translations of the page, where each key is a BCP 47 tag and each value an
+ *   entry.
+ *   Alternate resources inherit fields from the entry they are described in.
  */
 
 import {URL} from 'node:url'
@@ -21,15 +30,16 @@ const own = {}.hasOwnProperty
 /**
  * Build a sitemap.
  *
- * @param {Array<string|Entry>} [data] URLs to build a sitemap for.
+ * @param {Array<string|Entry>} [data]
+ *   URLs to build a sitemap for.
  * @returns {Root}
  */
 export function sitemap(data) {
-  /** @type {Array.<Element>} */
+  /** @type {Array<Element>} */
   const nodes = []
-  /** @type {Object.<string, Entry>} */
+  /** @type {Record<string, Entry>} */
   const urls = {}
-  /** @type {Object.<string, Array.<string>>} */
+  /** @type {Record<string, Array<string>>} */
   const groupings = {}
   /** @type {boolean|undefined} */
   let i18n
@@ -59,7 +69,7 @@ export function sitemap(data) {
           )
         }
 
-        /** @type {Array.<string>} */
+        /** @type {Array<string>} */
         let grouping
 
         // Find an already defined grouping.
