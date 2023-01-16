@@ -223,6 +223,12 @@ To define different fields, either use a full entry object:
 ]
 ```
 
+###### Type
+
+```ts
+type Alternate = string | Omit<Entry, 'lang' | 'alternate'>
+```
+
 ## Types
 
 This package is fully typed with [TypeScript][].
