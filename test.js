@@ -1,8 +1,15 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {sitemap} from './index.js'
+import * as mod from './index.js'
 
 test('sitemap', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['sitemap'],
+    'should expose the public api'
+  )
+
   assert.deepEqual(
     sitemap(),
     {
