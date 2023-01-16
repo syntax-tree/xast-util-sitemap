@@ -1,8 +1,9 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {sitemap} from './index.js'
 
-test('sitemap', (t) => {
-  t.deepEqual(
+test('sitemap', () => {
+  assert.deepEqual(
     sitemap(),
     {
       type: 'root',
@@ -23,7 +24,7 @@ test('sitemap', (t) => {
     'should support no entries'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap(['https://example.com']).children[1],
     {
       type: 'element',
@@ -48,7 +49,7 @@ test('sitemap', (t) => {
     'should support an entry (string)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -84,7 +85,7 @@ test('sitemap', (t) => {
     'should support an entry (object)'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       // @ts-expect-error runtime.
       sitemap([{}])
@@ -93,7 +94,7 @@ test('sitemap', (t) => {
     'should crash w/o `url`'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       sitemap(['example.com'])
     },
@@ -101,7 +102,7 @@ test('sitemap', (t) => {
     'should crash w/ incorrect `url`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap(['https://example.com/🤔 🤷‍♂️']).children[1],
     {
       type: 'element',
@@ -132,7 +133,7 @@ test('sitemap', (t) => {
     'should encode URLs'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {url: 'https://example.com', modified: '05 October 2011 14:48 UTC'}
     ]).children[1],
@@ -165,7 +166,7 @@ test('sitemap', (t) => {
     'should support `modified` (string)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -201,7 +202,7 @@ test('sitemap', (t) => {
     'should support `modified` (date)'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       sitemap([{url: 'https://example.com', modified: new Date('asd')}])
     },
@@ -209,7 +210,7 @@ test('sitemap', (t) => {
     'should crash w/ incorrect `modified`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([{url: 'https://example.com', lang: 'en'}]).children[1],
     {
       type: 'element',
@@ -236,7 +237,7 @@ test('sitemap', (t) => {
     'should ignore `lang` w/o `alternate`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -323,7 +324,7 @@ test('sitemap', (t) => {
     'should support `alternate`s'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com/',
@@ -410,7 +411,7 @@ test('sitemap', (t) => {
     'should support `alternate`s as full entry objects'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       sitemap([{url: 'https://example.com', alternate: {}}])
     },
@@ -418,7 +419,7 @@ test('sitemap', (t) => {
     'should crash w/ `alternate` w/o `lang`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -518,7 +519,7 @@ test('sitemap', (t) => {
     'alternates should inherit fields'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -623,7 +624,7 @@ test('sitemap', (t) => {
     'alternates should support fields defined separately'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -778,7 +779,7 @@ test('sitemap', (t) => {
     'alternates should smartly merge groupings together (a ref b, b ref c, so they each reference each other)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     sitemap([
       {
         url: 'https://example.com',
@@ -932,6 +933,4 @@ test('sitemap', (t) => {
     },
     'alternates should smartly merge groupings together (a ref b, c ref b, so they each reference each other)'
   )
-
-  t.end()
 })
