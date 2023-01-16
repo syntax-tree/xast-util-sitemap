@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[xast][] utility to build a [`sitemap.xml`][sitemap].
+[xast][] utility to build a [`sitemap.xml`][sitemap-site].
 
 ## Contents
 
@@ -19,6 +19,7 @@
 *   [API](#api)
     *   [`sitemap(data)`](#sitemapdata)
     *   [`Entry`](#entry)
+    *   [`Alternate`](#alternate-1)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Security](#security)
@@ -28,7 +29,7 @@
 
 ## What is this?
 
-This package helps you build a [`sitemap.xml`][sitemap].
+This package helps you build a [`sitemap.xml`][sitemap-site].
 It supports localization as suggested by [Google][].
 
 ## When should I use this?
@@ -56,7 +57,7 @@ sitemap changes to Google.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install xast-util-sitemap
@@ -137,49 +138,57 @@ Yields (pretty printed):
 
 ## API
 
-This package exports the identifier `sitemap`.
+This package exports the identifier [`sitemap`][sitemap].
 There is no default export.
 
 ### `sitemap(data)`
 
 Build a sitemap.
 
-###### `data`
+###### Parameters
 
-URLs to build a sitemap for.
-`data` is an `Array<url | Entry>`.
-`url` is `string` and equivalent to an `{url: url}` entry.
+*   `data` (`Array<string | Entry>`)
+    — entries to build a sitemap for
+    (see [`Entry`][entry], strings are equivalent to `{url: string}`)
 
 ###### Returns
 
-[xast][] root ([`Root`][root]).
+Sitemap ([`Root`][root]).
 
 ### `Entry`
 
-Entries represent a single URL and describe them with metadata.
+Entries represent a single URL and describe them with metadata (TypeScript
+type).
 
-###### `entry.url`
+##### Fields
 
-Full URL ([`<loc>`][loc]; `string`, required, example: `https://example.org/`)
+###### `url`
 
-###### `entry.modified`
+Full URL ([`<loc>`][loc]; `string`, required, example: `https://example.org/`).
+
+###### `modified`
 
 Value indicating when the page last changed ([`<lastmod>`][lastmod]; `Date` or
 value for `new Date(x)`, optional).
 
-###### `entry.lang`
+###### `lang`
 
 [BCP 47][bcp47] tag indicating the language of the page (`string`, required w/
 `alternate`, example: `'en-GB'`).
 
-###### `entry.alternate`
+###### `alternate`
 
-Translations of the page, where each key is a [BCP 47][bcp47] tag and each value
-an entry (`Record<string, url | Entry>`, optional, example: `{nl:
-'https://example.nl/'}`).
+Translations of the page, where each key is a [BCP 47][bcp47] tag and each
+value an [`Alternate`][alternate] (`Record<string, Alternate>`, optional,
+example: `{nl: 'https://example.nl/'}`).
 
 Alternate resources “inherit” fields (`modified`) from the entry they are
 described in.
+
+### `Alternate`
+
+Alternative content, typically a translation (TypeScript type).
+
 To define different fields, either use a full entry object:
 
 ```js
@@ -193,7 +202,7 @@ To define different fields, either use a full entry object:
 ]
 ```
 
-Or define them separately:
+…or define them separately:
 
 ```js
 [
@@ -217,13 +226,13 @@ Or define them separately:
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types `Alternate` and `Entry`.
+It exports the additional types [`Alternate`][alternate] and [`Entry`][entry].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
@@ -307,7 +316,7 @@ abide by its terms.
 
 [root]: https://github.com/syntax-tree/xast#root
 
-[sitemap]: https://www.sitemaps.org
+[sitemap-site]: https://www.sitemaps.org
 
 [loc]: https://www.sitemaps.org/protocol.html#locdef
 
@@ -316,3 +325,9 @@ abide by its terms.
 [bcp47]: https://github.com/wooorm/bcp-47
 
 [google]: https://developers.google.com/search/docs/advanced/crawling/localized-versions#expandable-3
+
+[sitemap]: #sitemapdata
+
+[entry]: #entry
+
+[alternate]: #alternate-1
