@@ -1,22 +1,27 @@
 /**
  * @typedef {import('xast').Root} Root
  * @typedef {import('xast').Element} Element
- *
- * @typedef {string | Omit<Entry, 'lang'|'alternate'>} Alternate
+ */
+
+/**
+ * @typedef {string | Omit<Entry, 'lang' | 'alternate'>} Alternate
  *
  * @typedef Entry
  *   Entries represent a single URL and describe them with metadata.
  * @property {string} url
  *   Full URL (example: `'https://example.org/'`).
+ *
  *   See <https://www.sitemaps.org/protocol.html#locdef>
- * @property {number|string|Date} [modified]
+ * @property {number | string | Date | null | undefined} [modified]
  *   Value indicating when the page last changed.
- * @property {string} [lang]
+ * @property {string | null | undefined} [lang]
  *   BCP 47 tag indicating the language of the page (example: `'en-GB'`).
+ *
  *   See <https://github.com/wooorm/bcp-47>
- * @property {Record<string, Alternate>} [alternate]
+ * @property {Record<string, Alternate> | null | undefined} [alternate]
  *   Translations of the page, where each key is a BCP 47 tag and each value an
  *   entry.
+ *
  *   Alternate resources inherit fields from the entry they are described in.
  */
 
@@ -30,9 +35,10 @@ const own = {}.hasOwnProperty
 /**
  * Build a sitemap.
  *
- * @param {Array<string|Entry>} [data]
+ * @param {Array<string | Entry> | null | undefined} [data]
  *   URLs to build a sitemap for.
  * @returns {Root}
+ *   Sitemap.
  */
 export function sitemap(data) {
   /** @type {Array<Element>} */
@@ -41,8 +47,8 @@ export function sitemap(data) {
   const urls = {}
   /** @type {Record<string, Array<string>>} */
   const groupings = {}
-  /** @type {boolean|undefined} */
-  let i18n
+  /** @type {boolean} */
+  let i18n = false
 
   if (data) {
     let index = -1
@@ -172,7 +178,7 @@ export function sitemap(data) {
 }
 
 /**
- * @param {string|Entry} d
+ * @param {string | Entry} d
  */
 function toEntry(d) {
   /** @type {Entry} */
@@ -196,7 +202,7 @@ function toEntry(d) {
 }
 
 /**
- * @param {Date|string|number} value
+ * @param {Date | string | number} value
  * @returns {Date}
  */
 export function toDate(value) {
