@@ -66,14 +66,14 @@ npm install xast-util-sitemap
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {sitemap} from 'https://esm.sh/xast-util-sitemap@1'
+import {sitemap} from 'https://esm.sh/xast-util-sitemap@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {sitemap} from 'https://esm.sh/xast-util-sitemap@1?bundle'
+  import {sitemap} from 'https://esm.sh/xast-util-sitemap@2?bundle'
 </script>
 ```
 
