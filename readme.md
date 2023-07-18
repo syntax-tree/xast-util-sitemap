@@ -57,7 +57,7 @@ sitemap changes to Google.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install xast-util-sitemap
@@ -138,7 +138,7 @@ Yields (pretty printed):
 
 ## API
 
-This package exports the identifier [`sitemap`][sitemap].
+This package exports the identifier [`sitemap`][api-sitemap].
 There is no default export.
 
 ### `sitemap(data)`
@@ -147,9 +147,9 @@ Build a sitemap.
 
 ###### Parameters
 
-*   `data` (`Array<string | Entry>`)
+*   `data` (`Array<Entry | string>`)
     — entries to build a sitemap for
-    (see [`Entry`][entry], strings are equivalent to `{url: string}`)
+    (see [`Entry`][api-entry], strings are equivalent to `{url: string}`)
 
 ###### Returns
 
@@ -179,7 +179,7 @@ value for `new Date(x)`, optional).
 ###### `alternate`
 
 Translations of the page, where each key is a [BCP 47][bcp47] tag and each
-value an [`Alternate`][alternate] (`Record<string, Alternate>`, optional,
+value an [`Alternate`][api-alternate] (`Record<string, Alternate>`, optional,
 example: `{nl: 'https://example.nl/'}`).
 
 Alternate resources “inherit” fields (`modified`) from the entry they are
@@ -226,20 +226,24 @@ To define different fields, either use a full entry object:
 ###### Type
 
 ```ts
-type Alternate = string | Omit<Entry, 'lang' | 'alternate'>
+type Alternate = Omit<Entry, 'alternate' | 'lang'> | string
 ```
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Alternate`][alternate] and [`Entry`][entry].
+It exports the additional types [`Alternate`][api-alternate] and
+[`Entry`][api-entry].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `xast-util-sitemap@^1`,
+compatible with Node.js 12.
 
 ## Security
 
@@ -284,9 +288,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/xast-util-sitemap
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/xast-util-sitemap.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=xast-util-sitemap
 
-[size]: https://bundlephobia.com/result?p=xast-util-sitemap
+[size]: https://bundlejs.com/?q=xast-util-sitemap
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -332,8 +336,8 @@ abide by its terms.
 
 [google]: https://developers.google.com/search/docs/advanced/crawling/localized-versions#expandable-3
 
-[sitemap]: #sitemapdata
+[api-sitemap]: #sitemapdata
 
-[entry]: #entry
+[api-entry]: #entry
 
-[alternate]: #alternate-1
+[api-alternate]: #alternate-1
